@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>음악 표절 검사기 - 로그인</title>
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="login-container">
+        <header>
+            <h1 class="logo-text">Voice Analyze</h1>
+            <p class="service-name">🎶 음악 표절 검사기</p>
+        </header>
+
+        <main class="login-box">
+            
+            {% with messages = get_flashed_messages() %}
+              {% if messages %}
+                {% for message in messages %}
+                  <p class="error-message">{{ message }}</p>
+                {% endfor %}
+              {% endif %}
+            {% endwith %}
+            
+            <form action="{{ url_for('login') }}" method="POST">
+                <div class="input-group">
+                    <input type="text" id="username" name="username" placeholder="아이디" required>
+                </div>
+
+                <div class="input-group">
+                    <input type="password" id="password" name="password" placeholder="비밀번호" required>
+                </div>
+
+                <button type="submit" class="login-btn">로그인</button>
+            </form>
+
+            <div class="links">
+                <a href="{{ url_for('register') }}">회원가입</a>
+                <span class="separator">|</span>
+                <a href="#">비밀번호 찾기</a>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

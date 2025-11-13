@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>음악 표절 검사기 - 회원가입</title>
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+</head>
+<body>
+    <div class="register-container">
+        <header>
+            <h1 class="logo-text">Voice Analyze</h1>
+            <p class="service-name">🎶 음악 표절 검사기</p>
+        </header>
+
+        <main class="register-box">
+            <h2>회원가입</h2>
+
+            {% with messages = get_flashed_messages() %}
+              {% if messages %}
+                {% for message in messages %}
+                  <p class="error-message">{{ message }}</p>
+                {% endfor %}
+              {% endif %}
+            {% endwith %}
+
+            <form action="{{ url_for('register') }}" method="POST">
+                <div class="input-group">
+                    <input type="text" id="username" name="username" placeholder="사용할 아이디" required>
+                </div>
+
+                <div class="input-group">
+                    <input type="email" id="email" name="email" placeholder="이메일 주소" required>
+                </div>
+
+                <div class="input-group">
+                    <input type="password" id="password" name="password" placeholder="비밀번호" required>
+                </div>
+
+                <div class="input-group">
+                    <input type="password" id="password-confirm" name="password-confirm" placeholder="비밀번호 확인" required>
+                </div>
+
+                <button type="submit" class="register-btn">가입하기</button>
+            
+            </form>
+
+            <div class="links">
+                <p>이미 계정이 있으신가요? <a href="{{ url_for('login') }}">로그인</a></p>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
