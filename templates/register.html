@@ -6,20 +6,187 @@
     <title>음악 표절 검사기 - 회원가입</title>
     
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+    <style>
+        /* 1. 네이버 스타일 배경 및 레이아웃 */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f5f6f7; /* 네이버 특유의 연한 회색 배경 */
+            font-family: 'Nanum Gothic', sans-serif;
+        }
+
+        /* 2. 컨테이너 (카드) */
+        .register-container {
+            width: 100%;
+            max-width: 460px; /* 네이버 로그인창 너비와 비슷하게 */
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        /* 3. 헤더 (로고) */
+        header {
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        .logo-text {
+            color: #03C75A; /* 네이버 그린 */
+            font-size: 45px;
+            margin: 0;
+            font-weight: 900;
+            letter-spacing: -2px;
+            cursor: pointer;
+        }
+        .service-name {
+            color: #8e8e8e;
+            margin-top: 5px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        /* 4. 입력창 스타일 (각진 형태, 깔끔함) */
+        .input-group {
+            margin-bottom: 10px;
+        }
+        input {
+            width: 100%;
+            padding: 14px 15px;
+            border: 1px solid #dadada; /* 연한 테두리 */
+            background-color: white;
+            font-size: 15px;
+            box-sizing: border-box;
+            color: #333;
+            outline: none;
+            /* 네이버는 border-radius가 거의 없음 */
+            border-radius: 0; 
+        }
+        
+        /* 입력창 포커스 시 네이버 그린 테두리 */
+        input:focus {
+            border: 1px solid #03C75A; 
+            z-index: 1; /* 겹쳤을 때 위로 */
+        }
+
+        /* 상단 둥근 모서리 처리 (아이디 등) - 선택 사항 */
+        .input-group:first-child input { border-radius: 6px 6px 0 0; }
+        /* 하단 둥근 모서리 처리 - 선택 사항 */
+        .input-group:last-child input { border-radius: 0 0 6px 6px; }
+        
+        /* 여기선 개별 분리된 스타일로 가겠습니다 (모두 약간 둥글게) */
+        input { border-radius: 6px; }
+
+
+        /* 5. 버튼과 입력창이 같이 있는 그룹 */
+        .input-with-btn {
+            display: flex;
+            gap: 8px;
+        }
+        .input-with-btn input {
+            flex: 1;
+        }
+
+        /* 6. 중복확인 / 인증 버튼 */
+        .check-btn {
+            padding: 0 15px;
+            background-color: #03C75A;
+            color: white;
+            border: 1px solid #03C75A;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+        .check-btn:hover {
+            background-color: #02b150; /* 호버 시 약간 진하게 */
+        }
+        .check-btn:disabled {
+            background-color: #ddd;
+            border-color: #ddd;
+            color: #888;
+            cursor: not-allowed;
+        }
+
+        /* 7. 가입하기 메인 버튼 */
+        .register-btn {
+            width: 100%;
+            padding: 15px;
+            margin-top: 20px;
+            background-color: #03C75A; /* 네이버 그린 */
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .register-btn:hover {
+            background-color: #02b150;
+        }
+
+        /* 8. 메시지 스타일 */
+        .pw-msg {
+            font-size: 12px;
+            margin-top: -5px;
+            margin-bottom: 15px;
+            text-align: left;
+            min-height: 18px;
+            padding-left: 2px;
+        }
+        .text-success { color: #03C75A; font-weight: bold; }
+        .text-danger { color: #e74c3c; font-weight: bold; }
+        
+        .error-message {
+            color: #e74c3c;
+            font-size: 12px;
+            text-align: center;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        /* 9. 하단 링크 */
+        .links {
+            margin-top: 20px;
+            font-size: 13px;
+            color: #8e8e8e;
+            text-align: center;
+        }
+        .links a {
+            color: #333;
+            text-decoration: none;
+        }
+        .links a:hover {
+            text-decoration: underline;
+        }
+        
+        /* 라벨 추가 (선택적) */
+        label {
+            display: block;
+            text-align: left;
+            font-size: 14px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+            margin-left: 2px;
+        }
+    </style>
 </head>
 <body>
     <div class="register-container">
         <header>
-            <h1 class="logo-text">Voice Analyze</h1>
-            <p class="service-name">🎶 음악 표절 검사기</p>
+            <!-- 네이버 스타일의 굵고 큰 로고 -->
+            <h1 class="logo-text">VOICE ANALYZE</h1>
+            <p class="service-name">음악 표절 검사 서비스</p>
         </header>
 
         <main class="register-box">
-            <h2>회원가입</h2>
-
+            <!-- 에러 메시지 -->
             {% with messages = get_flashed_messages() %}
               {% if messages %}
                 {% for message in messages %}
@@ -29,30 +196,148 @@
             {% endwith %}
 
             <form action="{{ url_for('register') }}" method="POST">
+                
                 <div class="input-group">
-                    <input type="text" id="username" name="username" placeholder="사용할 아이디" required>
+                    <label for="username">아이디</label>
+                    <div class="input-with-btn">
+                        <input type="text" id="username" name="username" placeholder="아이디 입력" 
+                               value="{{ username|default('') }}" required>
+                        <!-- 네이버는 보통 버튼이 초록색입니다 -->
+                        <button type="button" class="check-btn" onclick="checkUsername()">중복확인</button>
+                    </div>
                 </div>
 
                 <div class="input-group">
-                    <input type="email" id="email" name="email" placeholder="이메일 주소" required>
+                    <label for="email">본인 확인 이메일</label>
+                    <div class="input-with-btn">
+                        <input type="email" id="email" name="email" placeholder="이메일 주소" 
+                               value="{{ email|default('') }}" required>
+                        <button type="button" class="check-btn" onclick="sendEmail()">인증번호 받기</button>
+                    </div>
                 </div>
 
                 <div class="input-group">
-                    <input type="password" id="password" name="password" placeholder="비밀번호" required>
+                    <input type="text" id="email-code" name="email-code" placeholder="인증번호 입력" 
+                           value="{{ code_input|default('') }}" required>
                 </div>
 
                 <div class="input-group">
-                    <input type="password" id="password-confirm" name="password-confirm" placeholder="비밀번호 확인" required>
+                    <label for="password">비밀번호</label>
+                    <input type="password" id="password" name="password" placeholder="비밀번호" 
+                           required oninput="checkPasswordMatch()">
                 </div>
+
+                <div class="input-group">
+                    <input type="password" id="password-confirm" name="password-confirm" placeholder="비밀번호 재확인" 
+                           required oninput="checkPasswordMatch()">
+                </div>
+
+                <!-- 비밀번호 메시지 -->
+                <div id="pw-message-box" class="pw-msg"></div>
 
                 <button type="submit" class="register-btn">가입하기</button>
             
             </form>
 
             <div class="links">
-                <p>이미 계정이 있으신가요? <a href="{{ url_for('login') }}">로그인</a></p>
+                이미 계정이 있으신가요? <a href="{{ url_for('login') }}">로그인</a>
             </div>
         </main>
     </div>
+
+    <script>
+        // 1. 아이디 중복 확인
+        function checkUsername() {
+            const usernameInput = document.getElementById('username');
+            const username = usernameInput.value;
+
+            if (!username) {
+                alert('아이디를 입력해주세요.');
+                usernameInput.focus();
+                return;
+            }
+
+            fetch('/check-username', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ username: username }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.available) {
+                    alert('사용 가능한 아이디입니다.');
+                } else {
+                    alert(data.msg);
+                    usernameInput.value = ""; 
+                    usernameInput.focus();
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('오류가 발생했습니다.');
+            });
+        }
+
+        // 2. 비밀번호 실시간 확인
+        function checkPasswordMatch() {
+            const pw1 = document.getElementById('password').value;
+            const pw2 = document.getElementById('password-confirm').value;
+            const msgBox = document.getElementById('pw-message-box');
+
+            if (pw1 === "" && pw2 === "") {
+                msgBox.innerText = "";
+                return;
+            }
+
+            if (pw2.length > 0) {
+                if (pw1 === pw2) {
+                    msgBox.innerHTML = "비밀번호가 일치합니다.";
+                    msgBox.className = "pw-msg text-success"; 
+                } else {
+                    msgBox.innerHTML = "비밀번호가 일치하지 않습니다.";
+                    msgBox.className = "pw-msg text-danger"; 
+                }
+            } else {
+                msgBox.innerText = "";
+            }
+        }
+
+        // 3. 이메일 전송
+        function sendEmail() {
+            const emailInput = document.getElementById('email');
+            const email = emailInput.value;
+            const btn = event.target; 
+
+            if (!email) {
+                alert('이메일 주소를 입력해주세요.');
+                emailInput.focus();
+                return;
+            }
+
+            btn.disabled = true;
+            btn.innerText = "전송중";
+
+            fetch('/send-code', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ email: email }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.msg);
+                if (data.success) {
+                    document.getElementById('email-code').focus();
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('서버 통신 중 오류가 발생했습니다.');
+            })
+            .finally(() => {
+                btn.disabled = false;
+                btn.innerText = "인증번호 받기";
+            });
+        }
+    </script>
 </body>
 </html>
