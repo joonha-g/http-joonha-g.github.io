@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>분석 결과</title>
+    <style>
+        .score-box { border: 2px solid #007bff; padding: 20px; border-radius: 10px; text-align: center; margin: 20px 0; }
+        .high-risk { color: red; }
+        .safe { color: green; }
+    </style>
+</head>
+<body>
+    <h1>분석 결과 리포트</h1>
+    
+    <div class="score-box">
+        <h3>유사도 점수</h3>
+        <h1 class="{{ 'high-risk' if data.similarity_score >= 80 else 'safe' }}">
+            {{ data.similarity_score }}%
+        </h1>
+        <p>판정: <strong>{{ data.result_msg }}</strong></p>
+    </div>
+
+    <h3>상세 데이터</h3>
+    <ul>
+        <li>분석 일시: {{ data.created_at.strftime('%Y-%m-%d %H:%M') }}</li>
+        <li>파일 1 경로: {{ data.file1_path }}</li>
+        <li>파일 2 경로: {{ data.file2_path }}</li>
+        <li>추출된 벡터 1 (일부): {{ data.vector1[:4] }} ...</li>
+        <li>추출된 벡터 2 (일부): {{ data.vector2[:4] }} ...</li>
+    </ul>
+
+    <a href="/analyze">다른 파일 분석하기</a> | 
+    <a href="/index">홈으로</a>
+</body>
+</html>
