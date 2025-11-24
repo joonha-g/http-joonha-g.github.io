@@ -49,7 +49,7 @@ mail = Mail(app)
 # --- 1-2. 인증번호 저장소 ---
 verification_codes = {} 
 reset_codes = {}
-
+ 
 # --- 2. 데이터베이스 설정 ---
 # DB_USER = "postgres"
 # DB_PASSWORD = "postgres"
@@ -401,3 +401,7 @@ if __name__ == '__main__':
     with app.app_context():
         db.create_all()
     app.run(debug=True)
+
+
+
+#업데이트용 아무말
